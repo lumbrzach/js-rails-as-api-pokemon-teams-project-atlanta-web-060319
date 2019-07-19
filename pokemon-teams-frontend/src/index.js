@@ -63,7 +63,17 @@ function releasePokemon(id) {
 })
 }
 
-function handleAddBtn() {
-
+function handleAddBtn(e) {
+    fetch(`http://localhost:3000/trainers/${e.target.dataset.id}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify({
+            "trainer_id": e.target.dataset.id
+        })
+    })
+    .catch(res => console.log("Error:", res))
 }
 
