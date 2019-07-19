@@ -31,14 +31,39 @@ function createTrainerCard(trainer) {
     let ul = document.createElement("ul")
     trainer.pokemons.forEach(function(pokemon) {
         let li = document.createElement("li")
-        li.innerText = console.log(pokemon.name)
+        li.innerText = pokemon.nickname
         ul.appendChild(li)
+        let releaseBtn = document.createElement("button")
+        releaseBtn.className = "release"
+        releaseBtn.innerText = "Release"
+        releaseBtn.setAttribute("data-id", pokemon.id)
+        releaseBtn.addEventListener("click", handleReleaseBtn)
+        li.appendChild(releaseBtn)
     }) 
-  
 
     let addBtn = document.createElement("button")
     addBtn.innerText = "Add Pokemon"
-    addBtn.setAttribute("data-trainer-id", trainer.id)
+    addBtn.setAttribute("data-id", trainer.id)
     addBtn.addEventListener("click", handleAddBtn)
 
+    main.appendChild(div)
+    div.appendChild(p)
+    div.appendChild(addBtn)
+    div.appendChild(ul)
 }
+
+function handleReleaseBtn(e) {
+    e.target.parentElement.remove()
+    releasePokemon(e.target.dataset.id)
+}
+
+function releasePokemon(id) {
+    fetch(`http://localhost:3000/pokemons/${id}`, {
+        method: "DELETE"
+})
+}
+
+function handleAddBtn() {
+
+}
+
